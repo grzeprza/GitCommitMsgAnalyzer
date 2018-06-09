@@ -16,6 +16,7 @@ class ProjectStats(object):
     #helpful variables
     #dictionary (author name, nbr of commits)
     _uniqueAuthorsDict = None
+    _uniqueCommitersDict = None
 
     def __init__(self, commits):
         self.commits = commits
@@ -59,6 +60,19 @@ class ProjectStats(object):
                 authorsDict[commit._author] = (nbrOfCommits + 1)
             self._uniqueAuthorsDict = authorsDict
         return self._uniqueAuthorsDict
+
+    def getUniqueCommitersDict(self):
+        if self._uniqueCommitersDict is None:
+            commitersDict = dict()
+            for commit in self.commits:
+                if commitersDict.get(commit._committer, 0) == 0:
+                    nbrOfCommits = 0
+                    commitersDict.setdefault(commit._committer, 0)
+                else:
+                    nbrOfCommits = commitersDict.get(commit._committer)
+                commitersDict[commit._committer] = (nbrOfCommits + 1)
+            self._uniqueCommitersDict = commitersDict
+        return self._uniqueCommitersDict
 
     def __str__(self):
         return (
