@@ -49,6 +49,9 @@ else:
 
 # Save results to File ==================================================================
 if(saveResultToFile):
+    if(fileContent == ""):
+        print("No content to save to file")
+        exit(0)
     summaryFile = open("./summary.txt","w")
     summaryFile.write(fileContent)
     summaryFile.close()
