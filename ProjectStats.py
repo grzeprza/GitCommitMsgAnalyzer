@@ -78,8 +78,10 @@ class ProjectStats(object):
         return (
                 "Word/Commit: " + str(self.countWordPerCommit()) + "\n" +
                 "One Committers: " + str(self.countOneCommittersNumber()) + "\n" +
-                "Commit/User: " + str(self.countAvgCommitsPerUser())
-                )
+                "Commit/User: " + str(self.countAvgCommitsPerUser()) + "\n" +
+                "Authors count: " + str(len(self.getUniqueAuthorsDict())) + "\n" +
+                "Commiters count: " + str(len(self.getUniqueCommitersDict()))
+        )
 
 
 

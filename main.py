@@ -28,9 +28,9 @@ if(genProjStats):
     projStats.countOneCommittersNumber()
     projStats.countWordPerCommit()
     # projStats.inspectUsedPartOfSpeech()
-    print("Authors count : %d" % len(projStats.getUniqueAuthorsDict())) #TODO: ON kubernetes github - 1693, excel - 1980, program - 1997
-    print("Commiters count : %d" % len(projStats.getUniqueCommitersDict())) #TODO: on kubernetes 1867
+
     print(projStats)
+    fileContent += str(projStats)
 else:
     print("\nGenerating general project statistics skipped.\n")
 
