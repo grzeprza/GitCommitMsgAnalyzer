@@ -29,7 +29,7 @@ class ProjectStats(object):
             self._avgCommitsPerUser = self.numberOfCommits / nbrOfUsers
         return self._avgCommitsPerUser
 
-    def countOneCommittersNumber(self):
+    def countOneCommitAuthorsNumber(self):
         counteOneCommiters = 0
         for value in self._uniqueAuthorsDict.values():
             if value == 1:
@@ -77,7 +77,7 @@ class ProjectStats(object):
     def __str__(self):
         return (
                 "Word/Commit: " + str(self.countWordPerCommit()) + "\n" +
-                "One Committers: " + str(self.countOneCommittersNumber()) + "\n" +
+                "One Commit Authors: " + str(self.countOneCommitAuthorsNumber()) + "\n" +
                 "Commit/User: " + str(self.countAvgCommitsPerUser()) + "\n" +
                 "Authors count: " + str(len(self.getUniqueAuthorsDict())) + "\n" +
                 "Commiters count: " + str(len(self.getUniqueCommitersDict()))

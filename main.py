@@ -25,7 +25,7 @@ if(genProjStats):
     projStatsTitle = "Project statistics"
     projStats = ProjectStats(parsedCommits)
     projStats.countAvgCommitsPerUser()
-    projStats.countOneCommittersNumber()
+    projStats.countOneCommitAuthorsNumber()
     projStats.countWordPerCommit()
     # projStats.inspectUsedPartOfSpeech()
 
