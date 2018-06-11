@@ -17,6 +17,7 @@ class ProjectStats(object):
     #dictionary (author name, nbr of commits)
     _uniqueAuthorsDict = None
     _uniqueCommitersDict = None
+    _wordsPerCommitsDict = None
 
     def __init__(self, commits):
         self.commits = commits
@@ -82,6 +83,22 @@ class ProjectStats(object):
                 "Authors count: " + str(len(self.getUniqueAuthorsDict())) + "\n" +
                 "Commiters count: " + str(len(self.getUniqueCommitersDict()))
         )
+
+    def getWordsPerCommitsDict(self):
+        if self._wordsPerCommitsDict is None:
+            commitDict = dict()
+            for commit in self.commits:
+                if commitDict.get(commit._id, 0) == 0:
+                    sumOfAllWords = 0
+                    for line in commit._all:
+                        sumOfAllWords += len(getWords(line[0]))
+                    commitDict.setdefault(commit._id, sumOfAllWords)
+                else:
+                    print("Commits have the same id %s" % commit._id)
+            self._wordsPerCommitsDict = commitDict
+        print(len(self._wordsPerCommitsDict))
+        return self._wordsPerCommitsDict
+
 
 
 

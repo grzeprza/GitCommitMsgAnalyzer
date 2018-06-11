@@ -1,14 +1,20 @@
+import os
 #own
 import FileUtils
+import StatUtils
 from StatUtils import drawHistogram
 from StatUtils import analyzeComit
 from ProjectStats import ProjectStats
+
 file_path = FileUtils.chooseFile()
 
 fileContent = ""
-parseCommitsFromFile = False
-genProjStats = False
+fileSeparated = str(file_path).split('/')
+projectName = fileSeparated[len(fileSeparated)-1]
+parseCommitsFromFile = True
+genProjStats = True
 genCommitAnalysis = False
+prodImages = True
 saveResultToFile = False
 
 # Parses commits based on headers =======================================================
@@ -17,11 +23,12 @@ if(parseCommitsFromFile):
 
     print("Succesfully parsed %d commits" % len(parsedCommits))
     fileContent += "Succesfully parsed %d commits\n\n" % len(parsedCommits)
+
 else:
     print("\nParsing Commits form file skipped.\n")
 
 # Gather project statistics =============================================================
-if(genProjStats):
+if(genProjStats and parseCommitsFromFile):
     projStatsTitle = "Project statistics"
     projStats = ProjectStats(parsedCommits)
     projStats.countAvgCommitsPerUser()
@@ -35,7 +42,7 @@ else:
     print("\nGenerating general project statistics skipped.\n")
 
 # Analyze commits =======================================================================
-if(genCommitAnalysis):
+if(genCommitAnalysis and parseCommitsFromFile):
     analyzedCommits = []
     for commit in parsedCommits:
         analyzedCommits.append(analyzeComit(commitToAnal=commit))
@@ -46,6 +53,10 @@ if(genCommitAnalysis):
     print("Succesfully analyzed %d commits" % len(analyzedCommits))
 else:
     print("\nAnalyzing commits skipped.\n")
+# Produce image analysis ================================================================
+if(prodImages and genProjStats):
+    StatUtils.drawCommitAuthorHistogram(str(projectName), projStats.getUniqueAuthorsDict(), "Authors Count", "Nbr of Commits")
+    StatUtils.drawWordPerCommitHistogram(str(projectName), projStats.getWordsPerCommitsDict(), "Commits Count", "Nbr of Words")
 
 # Save results to File ==================================================================
 if(saveResultToFile):
