@@ -8,8 +8,8 @@ from TxtFileHeaderEnum import TxtFileHeader
 from Commit import Commit
 
 def extractText(header, line):
-    semicolon_index = line.find(":")
-    text = line[semicolon_index+1:]
+
+    text = line.replace(header.value[0], "")
     # print(str(header.value) + " - " + text)
     noenters = text.replace("\n", "")
     return noenters.replace("\r", "")
@@ -33,18 +33,18 @@ def parseFile(file_path):
         commit._body = []
         for line in file:
             if readsBody:
-                if not line.startswith(TxtFileHeader.ALL.value, 0, 10):
+                if not line.startswith(TxtFileHeader.ALL.value[0], 0, 10):
                     commit._body.append([line])
                 else:
                     readsBody = False
 
             if readsAll:
-                if not line.startswith(TxtFileHeader.ID.value, 0, 10):
+                if not line.startswith(TxtFileHeader.ID.value[0], 0, 10):
                     commit._all.append([line])
                 else:
                     readsAll = False
 
-            if line.startswith(TxtFileHeader.ID.value, 0, 10):
+            if line.startswith(TxtFileHeader.ID.value[0], 0, 10):
                 if commit._id != "":
                     commits.append(commit)
                     commit = Commit()
@@ -52,22 +52,22 @@ def parseFile(file_path):
                     commit._all = []
                 commit._id = extractText(TxtFileHeader.ID, line)
 
-            elif line.startswith(TxtFileHeader.AUTHOR.value, 0, 10):
+            elif line.startswith(TxtFileHeader.AUTHOR.value[0], 0, 10):
                 commit._author = extractText(TxtFileHeader.AUTHOR, line)
 
-            elif line.startswith(TxtFileHeader.COMMITTER.value, 0, 10):
+            elif line.startswith(TxtFileHeader.COMMITTER.value[0], 0, 10):
                 commit._committer = extractText(TxtFileHeader.COMMITTER, line)
 
-            elif line.startswith(TxtFileHeader.SUBJECT.value, 0, 10):
+            elif line.startswith(TxtFileHeader.SUBJECT.value[0], 0, 10):
                 commit._subject = extractText(TxtFileHeader.SUBJECT, line)
 
-            elif line.startswith(TxtFileHeader.BODY.value, 0, 10):
+            elif line.startswith(TxtFileHeader.BODY.value[0], 0, 10):
                 text = extractText(TxtFileHeader.BODY, line)
                 commit._body.append([text])
                 if len(text) > 0:
                     readsBody = True
 
-            elif line.startswith(TxtFileHeader.ALL.value, 0, 10):
+            elif line.startswith(TxtFileHeader.ALL.value[0], 0, 10):
                 text = extractText(TxtFileHeader.ALL, line)
                 commit._all.append([text])
                 if len(text) > 0:
