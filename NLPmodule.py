@@ -59,7 +59,7 @@ def isFirstWordImperative(sentence):
     wordos = nltk.word_tokenize("They "+sentence)
     # print(wordos)
     parsed = nltk.pos_tag(wordos)
-    print(parsed)
+    # print(parsed)
 
     word,tag = parsed[1]
     if tag == "VBP":

@@ -5,6 +5,7 @@ import StatUtils
 from StatUtils import drawHistogram
 from StatUtils import analyzeComit
 from ProjectStats import ProjectStats
+from GoldenRulesStats import GoldenRulesStats
 
 file_path = FileUtils.chooseFile()
 
@@ -14,6 +15,7 @@ projectName = fileSeparated[len(fileSeparated)-1]
 parseCommitsFromFile = True
 genProjStats = True
 genCommitAnalysis = True
+genGoldenRulesStats = True
 prodImages = False
 saveResultToFile = False
 
@@ -53,12 +55,30 @@ if genCommitAnalysis and parseCommitsFromFile:
     for commit in parsedCommits:
         analyzedCommits.append(analyzeComit(commitToAnal=commit))
 
-    for commitStat in analyzedCommits:
-        print (commitStat.readible() + "\n")
+    # for commitStat in analyzedCommits:
+    #     print (commitStat.readible() + "\n")
 
     print("Succesfully analyzed %d commits" % len(analyzedCommits))
 else:
     print("\nAnalyzing commits skipped.\n")
+
+print("\n")
+fileContent +="\n"
+# Gather Golden Rules stats ===================================================================
+if genGoldenRulesStats and genCommitAnalysis:
+    grs = GoldenRulesStats(analyzedCommits)
+    grs.countProcOfSubjectStartsWithCapitalLetter()
+    grs.countProcOfSubjectLt50Char()
+    grs.countProcOfSubjectInImperativeMood()
+    grs.countProcOfSubjectEndsWithoutDot()
+    grs.countProcOfBodyWrappedAt72Chars()
+    grs.countProcOfBodyExplenatory()
+    grs.countProcOfSubjectLineSeparatedFromBody()
+
+    print(str(grs))
+    fileContent += str(grs)
+else:
+    print("Gathering commits statistics skipped.\n")
 
 # Produce image analysis ================================================================
 if prodImages and genProjStats:
