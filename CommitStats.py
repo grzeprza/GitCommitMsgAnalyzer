@@ -1,3 +1,5 @@
+from NLPmodule import isFirstWordImperative
+
 class CommitStats(object):
     _commitId = ""
     _author = ""
@@ -38,9 +40,11 @@ class CommitStats(object):
             print ("subjectStartsWithCapitalLetter:" + str(subject))
             self._subjectStartWithCapitalLetter = False
 
-    def SubjectInImperativeMood(self, subject):
-        #check whether subject is in imperative mood
-        raise NotImplemented("Imperative mood not implemented")
+    def subjectInImperativeMood(self, subject):
+       if isFirstWordImperative(subject):
+           self._isSubjectInImperativeMood = True
+       else:
+           self._isSubjectInImperativeMood = False
 
     def bodyWrapped72Chars(self, body):
         #check whether body is wrapped at 72 chars
@@ -75,7 +79,7 @@ class CommitStats(object):
               "B72Ch: " + str(self._isBodyWrappedAt72Chars) + "\n" +
               "SLB: " + str(self._subjectLineSeparatedFromBody) + "\n" +
               "Exp: " + str(self._isBodyExplenatory) + "\n" +
-              "Imp:" + str(self._isSubjectInImperativeMood) )
+              "Imp: " + str(self._isSubjectInImperativeMood) )
 
     def __str__(self):
         return (self._commitId + "," + str(self._isSubjectLt50Char) +

@@ -51,3 +51,18 @@ def getPartOfSpeechSummaryDict(commits):
             else:
                 partOfSpeechDict[groupedTag] = partOfSpeechDict.get(groupedTag) + count
     return partOfSpeechDict
+
+def isFirstWordImperative(sentence):
+    #Problem: NLTK perceives VBP as NN
+    #Solutions: insert "they" to force imperative mood
+    #Source: https: // stackoverflow.com / questions / 9406093 / nltk - thinks - that - imperatives - are - nouns?utm_medium = organic & utm_source = google_rich_qa & utm_campaign = google_rich_qa1
+    wordos = nltk.word_tokenize("They "+sentence)
+    # print(wordos)
+    parsed = nltk.pos_tag(wordos)
+    print(parsed)
+
+    word,tag = parsed[1]
+    if tag == "VBP":
+        return True
+    else:
+        return False

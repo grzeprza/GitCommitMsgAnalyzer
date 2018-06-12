@@ -14,6 +14,7 @@ def analyzeComit(commitToAnal):
     stats.subjectStartsWithCapitalLetter(subject=commitToAnal._subject)
     stats.subjectLineSeparatedWithBody(body= commitToAnal._body, all=commitToAnal._all)
     stats.bodyWrapped72Chars(body= commitToAnal._body)
+    stats.subjectInImperativeMood(subject= commitToAnal._subject)
     return stats
 
 def binaryValue(variable):
