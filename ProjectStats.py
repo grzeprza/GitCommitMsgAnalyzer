@@ -1,5 +1,3 @@
-
-
 from numpy import gradient
 
 from StatUtils import getWords
@@ -24,7 +22,6 @@ class ProjectStats(object):
     _uniqueCommitersDict = None
     _wordsPerCommitsDict = None
 
-
     def __init__(self, commits):
         self.commits = commits
         self.numberOfCommits = len(commits)
@@ -44,7 +41,21 @@ class ProjectStats(object):
         return counteOneCommiters
 
     def inspectUsedPartOfSpeech(self):
-        raise NotImplemented("Used Part Of Speech Stats not implemented")
+        if self._partOfSpeech is None:
+            partOfSpeech = getPartOfSpeechSummaryDict(self.commits)
+            # print(partOfSpeech)
+            sum = 0
+            self._partOfSpeech = dict()
+
+            for (k,v) in partOfSpeech.items():
+                # print (k + " " + v)
+                sum += v
+
+            for (k,v) in partOfSpeech.items():
+                self._partOfSpeech.setdefault(k, round(v/sum,2) )
+
+        return self._partOfSpeech
+
 
     def countWordPerCommit(self):
         if self._wordPerCommit == -1.0:
@@ -81,14 +92,6 @@ class ProjectStats(object):
             self._uniqueCommitersDict = commitersDict
         return self._uniqueCommitersDict
 
-    def __str__(self):
-        return (
-                "Word/Commit: " + str(self.countWordPerCommit()) + "\n" +
-                "One Commit Authors: " + str(self.countOneCommitAuthorsNumber()) + "\n" +
-                "Commit/User: " + str(self.countAvgCommitsPerUser()) + "\n" +
-                "Authors count: " + str(len(self.getUniqueAuthorsDict())) + "\n" +
-                "Commiters count: " + str(len(self.getUniqueCommitersDict()))
-        )
 
     def getWordsPerCommitsDict(self):
         if self._wordsPerCommitsDict is None:
@@ -109,4 +112,12 @@ class ProjectStats(object):
             self._partOfSpeech = getPartOfSpeechSummaryDict(self.commits)
         return self._partOfSpeech
 
-
+    def __str__(self):
+        return (
+                "Word/Commit: " + str(self.countWordPerCommit()) + "\n" +
+                "One Commit Authors: " + str(self.countOneCommitAuthorsNumber()) + "\n" +
+                "Commit/User: " + str(self.countAvgCommitsPerUser()) + "\n" +
+                "Authors count: " + str(len(self.getUniqueAuthorsDict())) + "\n" +
+                "Commiters count: " + str(len(self.getUniqueCommitersDict())) + "\n"
+                "Used parts of speech: " + str(self.getPartOfSpeechDict())
+        )
