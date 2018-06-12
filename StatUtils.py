@@ -1,4 +1,6 @@
 import re #use regex
+from collections import OrderedDict
+
 import matplotlib.pyplot as plt
 import numpy as np
 import itertools as it
@@ -44,4 +46,23 @@ def drawWordPerCommitHistogram(projectName, data, ylabel, xlabel):
     plt.gca().set_xscale("log")
     plt.gca().set_yscale("log")
     drawHistogram(projectName, data, ylabel, xlabel)
+    plt.show()
+
+
+def drawPartsOfSpeechBarChart(projName, partOfSpeechDict):
+    # plt.bar(partOfSpeechDict)
+    # plt.title(projName)
+    # plt.draw()
+    partOfSpeechDict = OrderedDict(sorted(partOfSpeechDict.items(), key=lambda x: x[1], reverse=True))
+    objects = partOfSpeechDict.keys()
+    y_pos = np.arange(len(objects))
+    performance = partOfSpeechDict.values()
+
+    plt.bar(y_pos, performance, align='center', alpha=0.5)
+    plt.xticks(y_pos, objects)
+    plt.ylabel('Count')
+    plt.title(projName)
+    plt.gca().set_yscale("log")
+    plt.xticks(rotation=90)
+
     plt.show()

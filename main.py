@@ -55,9 +55,9 @@ else:
     print("\nAnalyzing commits skipped.\n")
 # Produce image analysis ================================================================
 if(prodImages and genProjStats):
-    StatUtils.drawCommitAuthorHistogram(str(projectName), projStats.getUniqueAuthorsDict(), "Authors Count", "Nbr of Commits")
-    StatUtils.drawWordPerCommitHistogram(str(projectName), projStats.getWordsPerCommitsDict(), "Commits Count", "Nbr of Words")
-
+    # StatUtils.drawCommitAuthorHistogram(str(projectName), projStats.getUniqueAuthorsDict(), "Authors Count", "Nbr of Commits")
+    # StatUtils.drawWordPerCommitHistogram(str(projectName), projStats.getWordsPerCommitsDict(), "Commits Count", "Nbr of Words")
+    StatUtils.drawPartsOfSpeechBarChart(str(projectName), projStats.getPartOfSpeechDict())
 # Save results to File ==================================================================
 if(saveResultToFile):
     if(fileContent == ""):
