@@ -3,7 +3,6 @@ from collections import OrderedDict
 
 import matplotlib.pyplot as plt
 import numpy as np
-import itertools as it
 #own
 from CommitStats import CommitStats
 
@@ -12,9 +11,10 @@ def analyzeComit(commitToAnal):
     stats.isS50Ch(subject=commitToAnal._subject)
     stats.subjectEndsWithoutDot(subject=commitToAnal._subject)
     stats.subjectStartsWithCapitalLetter(subject=commitToAnal._subject)
-    stats.subjectLineSeparatedWithBody(body= commitToAnal._body, all=commitToAnal._all)
+    stats.subjectLineSeparatedWithBody(subject= commitToAnal._subject, body=commitToAnal._body)
     stats.bodyWrapped72Chars(body= commitToAnal._body)
     stats.subjectInImperativeMood(subject= commitToAnal._subject)
+    # stats.bodyExaplanation(body= commitToAnal._body)
     return stats
 
 def binaryValue(variable):

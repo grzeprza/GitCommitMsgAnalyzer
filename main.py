@@ -17,7 +17,7 @@ genProjStats = True
 genCommitAnalysis = True
 genGoldenRulesStats = True
 prodImages = False
-saveResultToFile = False
+saveResultToFile = True
 
 # Parses commits based on headers =======================================================
 if(parseCommitsFromFile):
@@ -75,7 +75,9 @@ if genGoldenRulesStats and genCommitAnalysis:
     grs.countProcOfBodyExplenatory()
     grs.countProcOfSubjectLineSeparatedFromBody()
 
+    print("Golden Rules statistics:")
     print(str(grs))
+    fileContent += "Golden Rules statistics:\n"
     fileContent += str(grs)
 else:
     print("Gathering commits statistics skipped.\n")
