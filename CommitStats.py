@@ -87,13 +87,4 @@ class CommitStats(object):
               "SLB: " + str(self._subjectLineSeparatedFromBody) + "\n" +
               "Exp: " + str(self._isBodyExplenatory) + "\n" +
               "Imp: " + str(self._isSubjectInImperativeMood) )
-    #
-    # def __str__(self):
-    #     return (self._commitId + "," + str(self._isSubjectLt50Char) +
-    #             "," + str(self._subjectEndsWithoutDot) +
-    #             "," + str(self._subjectStartWithCapitalLetter) +
-    #             "," + str(self._isBodyWrappedAt72Chars) +
-    #             "," + str(self._subjectLineSeparatedFromBody) +
-    #             "," + str(self._isBodyExplenatory) +
-    #             "," + str(self._isSubjectInImperativeMood) )
-    #
+

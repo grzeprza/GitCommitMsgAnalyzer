@@ -1,5 +1,7 @@
 import os
 #own
+from scipy.io.arff.arffread import go_data
+
 import FileUtils
 import StatUtils
 from StatUtils import drawHistogram
@@ -61,6 +63,34 @@ if genCommitAnalysis and parseCommitsFromFile:
     print("Succesfully analyzed %d commits" % len(analyzedCommits))
 else:
     print("\nAnalyzing commits skipped.\n")
+
+print("\n")
+fileContent +="\n"
+# Good and Bad commits classification ==================================================
+if genCommitAnalysis and parseCommitsFromFile:
+    totalSize = len(analyzedCommits)
+
+    goodCommitsCount = 0;
+    for commit in analyzedCommits:
+        goodRules = 0
+        if commit. _isSubjectLt50Char:
+            goodRules = goodRules + 1
+        if commit._subjectEndsWithoutDot:
+            goodRules = goodRules + 1
+        if commit._subjectStartWithCapitalLetter:
+            goodRules = goodRules + 1
+        if commit._isSubjectInImperativeMood:
+            goodRules = goodRules + 1
+        if commit._isBodyWrappedAt72Chars:
+            goodRules = goodRules + 1
+        if commit._subjectLineSeparatedFromBody:
+            goodRules = goodRules + 1
+        # if commit._isBodyExplenatory
+
+        if goodRules >= 5:
+            goodCommitsCount = goodCommitsCount + 1
+
+    print (goodCommitsCount/totalSize)
 
 print("\n")
 fileContent +="\n"
