@@ -62,6 +62,9 @@ def isFirstWordImperative(sentence):
     parsed = nltk.pos_tag(wordos)
     # print(parsed)
 
+    if len(parsed) <= 1:
+        return False
+
     word,tag = parsed[1]
     if tag == "VBP":
         return True
