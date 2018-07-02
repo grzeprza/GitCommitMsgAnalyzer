@@ -8,6 +8,7 @@ from StatUtils import drawHistogram
 from StatUtils import analyzeComit
 from ProjectStats import ProjectStats
 from GoldenRulesStats import GoldenRulesStats
+from ParamCorrelation import ParamCorrelation
 
 file_path = FileUtils.chooseFile()
 
@@ -17,7 +18,7 @@ projectName = fileSeparated[len(fileSeparated)-1]
 parseCommitsFromFile = True
 genProjStats = True
 genCommitAnalysis = True
-genGoldenRulesStats = True
+genGoldenRulesStats = False
 prodImages = False
 saveResultToFile = True
 
@@ -91,6 +92,19 @@ if genCommitAnalysis and parseCommitsFromFile:
             goodCommitsCount = goodCommitsCount + 1
 
     print (goodCommitsCount/totalSize)
+    fileContent += "Proc of Good Commits: " + str(goodCommitsCount/totalSize)
+
+print("\n")
+fileContent +="\n"
+# Perason Correlation between variables =================================================
+if genCommitAnalysis and parseCommitsFromFile:
+    pearsonCorrelation = ParamCorrelation(analyzedCommits)
+    pearsonCorrelation.extractData()
+    pearsonCorrelation.countCorrelation()
+
+    print(str(pearsonCorrelation))
+    fileContent += "Phi Correlation:\n"
+    fileContent += str(pearsonCorrelation)
 
 print("\n")
 fileContent +="\n"
@@ -123,7 +137,7 @@ if saveResultToFile :
     if fileContent == "":
         print("No content to save to file")
         exit(0)
-    summaryFile = open("./summary.txt","w")
+    summaryFile = open("./summary-" + projectName, "w")
     summaryFile.write(fileContent)
     summaryFile.close()
 else:
